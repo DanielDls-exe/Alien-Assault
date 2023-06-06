@@ -12,7 +12,7 @@ export class Enemy {
       this.y = y;
       this.width = 30;
       this.height = 30;
-      this.speed = 1;
+      this.speed = 1.5;
       this.death = false;
       this.image = image;
     }

@@ -3,7 +3,7 @@ import { Enemy } from "./actors/enemy";
 import { Bullet } from "./actors/bullets";
 import { detectCollision } from "./actors/collision";
 import { updateFPS, drawFPS } from "./actors/fps";
-
+import Swal from 'sweetalert2';
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 const ctx = canvas.getContext("2d");
 
@@ -84,13 +84,22 @@ console.log(enemies.length)
   enemies = enemies.filter((enemy) => !enemy.death);
   bullets = bullets.filter((bullet) => bullet.visible);
 
-  // Check game over condition
   if (enemies.length === 0) {
     // All enemies defeated, you win!
-    console.log("You win!");
+    Swal.fire({
+      title: '¡Ganaste!',
+      text: 'Has derrotado a todos los enemigos',
+      icon: 'success',
+      confirmButtonText: 'Aceptar'
+    });
   } else if (playerIsHit()) {
     // Player is hit, game over
-    console.log("Game over");
+    Swal.fire({
+      title: '¡Perdiste!',
+      text: 'Has sido derrotado por los enemigos',
+      icon: 'error',
+      confirmButtonText: 'Aceptar'
+    });
   } else {
     // Request animation frame
     requestAnimationFrame(update);
