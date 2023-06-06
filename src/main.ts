@@ -7,16 +7,28 @@ import { updateFPS, drawFPS } from "./actors/fps";
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 const ctx = canvas.getContext("2d");
 
-const player = new Player(canvas.width / 2, canvas.height - 50);
-const enemies: Enemy[] = [];
-const bullets: Bullet[] = [];
+// Cargar imágenes
+const playerImage = new Image();
+playerImage.src = "player.png";
+
+const enemyImage = new Image();
+enemyImage.src = "enemy.png";
+
+const bulletImage = new Image();
+bulletImage.src = "bullet.png";
+
+const player = new Player(canvas.width / 2, canvas.height - 50, playerImage);
+let enemies: Enemy[] = [];
+let bullets: Bullet[] = [];
+
+let isFiring = false;
 
 function createEnemies() {
   for (let row = 0; row < 4; row++) {
-    for (let col = 0; col < 7; col++) {
+    for (let col = 0; col < 6; col++) {
       const x = col * 80 + 50;
       const y = row * 60 + 50;
-      const enemy = new Enemy(x, y);
+      const enemy = new Enemy(x, y, enemyImage);
       enemies.push(enemy);
     }
   }
@@ -49,30 +61,65 @@ function update() {
   // Update the enemies
   enemies.forEach((enemy) => enemy.update());
 
-  // Update the bullets
-  bullets.forEach((bullet) => bullet.update());
-
-  // Check for collisions between bullets and enemies
+  // Update the bullets and check for collisions
+  // Update the bullets and check for collisions
   bullets.forEach((bullet) => {
+  if (!bullet.hit) {
+    bullet.update();
+
+    // Check for collisions between bullets and enemies
     enemies.forEach((enemy) => {
-      if (detectCollision(bullet, enemy)) {
+      if (!bullet.hit && !enemy.death && detectCollision(bullet, enemy)) {
         bullet.visible = false;
-        enemy.visible = false;
+        enemy.markAsDead();
+        bullet.hit = true;
       }
     });
-  });
+  }
+});
+
+console.log(enemies.length)
 
   // Remove invisible enemies and bullets
-  enemies.filter((enemy) => enemy.visible);
-  bullets.filter((bullet) => bullet.visible);
+  enemies = enemies.filter((enemy) => !enemy.death);
+  bullets = bullets.filter((bullet) => bullet.visible);
 
-  // Request animation frame
-  requestAnimationFrame(update);
+  // Check game over condition
+  if (enemies.length === 0) {
+    // All enemies defeated, you win!
+    console.log("You win!");
+  } else if (playerIsHit()) {
+    // Player is hit, game over
+    console.log("Game over");
+  } else {
+    // Request animation frame
+    requestAnimationFrame(update);
+  }
+}
+
+function playerIsHit() {
+  // Check if player is hit by any enemy
+  for (let i = 0; i < enemies.length; i++) {
+    if (detectCollision(player, enemies[i])) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function shoot() {
-  const bullet = new Bullet(player.x, player.y);
+  if (isFiring) {
+    return;
+  }
+
+  const bullet = new Bullet(player.x, player.y, bulletImage);
   bullets.push(bullet);
+  isFiring = true;
+
+  // Restablecer el estado de isFiring después de un cierto tiempo
+  setTimeout(() => {
+    isFiring = false;
+  }, 200); // Ajusta el tiempo según sea necesario
 }
 
 document.addEventListener("keydown", (event) => {
@@ -84,3 +131,4 @@ document.addEventListener("keydown", (event) => {
 createEnemies();
 draw();
 update();
+

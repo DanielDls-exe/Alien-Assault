@@ -4,24 +4,22 @@ export class Enemy {
     width: number;
     height: number;
     speed: number;
-    visible: boolean;
+    death: boolean;
+    image: HTMLImageElement;
   
-    constructor(x: number, y: number) {
+    constructor(x: number, y: number, image: HTMLImageElement) {
       this.x = x;
       this.y = y;
       this.width = 30;
       this.height = 30;
       this.speed = 1;
-      this.visible = true;
+      this.death = false;
+      this.image = image;
     }
   
     draw(ctx: CanvasRenderingContext2D) {
-      if (this.visible) {
-        ctx.beginPath();
-        ctx.rect(this.x, this.y, this.width, this.height);
-        ctx.fillStyle = "#FF0000";
-        ctx.fill();
-        ctx.closePath();
+      if (!this.death) {
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
       }
     }
   
@@ -35,6 +33,10 @@ export class Enemy {
         this.y += 20;
         this.speed *= -1;
       }
+    }
+
+    markAsDead() {
+      this.death = true;
     }
   }
   

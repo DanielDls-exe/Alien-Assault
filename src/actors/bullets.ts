@@ -5,23 +5,23 @@ export class Bullet {
     height: number;
     speed: number;
     visible: boolean;
+    hit: boolean;
+    image: HTMLImageElement;
   
-    constructor(x: number, y: number) {
+    constructor(x: number, y: number, image: HTMLImageElement) {
       this.x = x;
       this.y = y;
       this.width = 5;
       this.height = 15;
-      this.speed = 5;
+      this.speed = 3;
       this.visible = true;
+      this.hit = false;
+      this.image = image;
     }
   
     draw(ctx: CanvasRenderingContext2D) {
       if (this.visible) {
-        ctx.beginPath();
-        ctx.rect(this.x, this.y, this.width, this.height);
-        ctx.fillStyle = "#00FF00";
-        ctx.fill();
-        ctx.closePath();
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
       }
     }
   

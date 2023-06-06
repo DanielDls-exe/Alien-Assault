@@ -6,8 +6,9 @@ export class Player {
     speed: number;
     leftPressed: boolean;
     rightPressed: boolean;
+    image: HTMLImageElement;
   
-    constructor(x: number, y: number) {
+    constructor(x: number, y: number, image: HTMLImageElement) {
       this.x = x;
       this.y = y;
       this.width = 20;
@@ -15,6 +16,7 @@ export class Player {
       this.speed = 5;
       this.leftPressed = false;
       this.rightPressed = false;
+      this.image = image;
   
       document.addEventListener("keydown", this.keyDownHandler.bind(this));
       document.addEventListener("keyup", this.keyUpHandler.bind(this));
@@ -37,11 +39,8 @@ export class Player {
     }
   
     draw(ctx: CanvasRenderingContext2D) {
-      ctx.beginPath();
-      ctx.rect(this.x, this.y, this.width, this.height);
-      ctx.fillStyle = "#0095DD";
-      ctx.fill();
-      ctx.closePath();
+      ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+
     }
   
     update() {
