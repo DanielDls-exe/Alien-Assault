@@ -12,7 +12,7 @@ const startButton = document.getElementById("startButton") as HTMLButtonElement;
 const backgroundMusic = new Audio("musica-fondo.wav");
 backgroundMusic.loop = true;
 
-// Cargar imágenes y sonidos
+// Cargamos las imágenes y sonidos
 const playerImage = new Image();
 playerImage.src = "player.png";
 
@@ -56,19 +56,15 @@ function createEnemies() {
 }
 
 function draw() {
-  // Clear the canvas
+  // Limpiamos el canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Draw the player
+  // Dibujamos al jugador
   player.draw(ctx);
 
-  // Draw the enemies
+  // Dibujamos a los enemigos y balas
   enemies.forEach((enemy) => enemy.draw(ctx));
-
-  // Draw the bullets
   bullets.forEach((bullet) => bullet.draw(ctx));
-
-  // Request animation frame
   requestAnimationFrame(draw);
 
   updateFPS();
@@ -76,26 +72,22 @@ function draw() {
 }
 
 function update() {
-  // Update the player
+  // Actualizamos al jugar y enemigos
   player.update();
-
-  // Update the enemies
   enemies.forEach((enemy) => enemy.update());
 
-  // Update the bullets and check for collisions
-  // Update the bullets and check for collisions
+  // Actualizamos las balas y revisamos si ha dado a un enemigo
   bullets.forEach((bullet) => {
     if (!bullet.hit) {
         bullet.update();
 
-        // Check for collisions between bullets and enemies
         enemies.forEach((enemy) => {
             if (!bullet.hit && !enemy.death && detectCollision(bullet, enemy)) {
                 bullet.visible = false;
                 enemy.markAsDead();
                 bullet.hit = true;
 
-                // Reproducir el sonido de muerte del enemigo
+                // sonido de muerte del enemigo
                 enemy.deathSound.play();
             }
         });
@@ -104,12 +96,12 @@ function update() {
 
 console.log(enemies.length)
 
-  // Remove invisible enemies and bullets
+  // Quitamos a los enemigo muertos y las balas que ya no deben existir
   enemies = enemies.filter((enemy) => !enemy.death);
   bullets = bullets.filter((bullet) => bullet.visible);
 
   if (enemies.length === 0) {
-    // All enemies defeated, you win!
+    // Ya no quedan enemigos
     Swal.fire({
       title: '¡Ganaste!',
       text: 'Has derrotado a todos los enemigos',
@@ -118,7 +110,7 @@ console.log(enemies.length)
     });
     backgroundMusic.pause();
   } else if (playerIsHit()) {
-    // Player is hit, game over
+    // Un enemigo te ha tocado, perdiste
     Swal.fire({
       title: '¡Perdiste!',
       text: 'Has sido derrotado por los enemigos',
@@ -128,13 +120,12 @@ console.log(enemies.length)
     backgroundMusic.pause();
     player.deathSound.play();
   } else {
-    // Request animation frame
     requestAnimationFrame(update);
   }
 }
 
 function playerIsHit() {
-  // Check if player is hit by any enemy
+  // revisamos si un enemigo ha tocado al jugador
   for (let i = 0; i < enemies.length; i++) {
     if (detectCollision(player, enemies[i])) {
       return true;
@@ -152,13 +143,13 @@ function shoot() {
   bullets.push(bullet);
   isFiring = true;
 
-  // Reproducir el sonido de disparo
+  // sonido de disparo
   bullet.sound.play();
 
-  // Restablecer el estado de isFiring después de un cierto tiempo
+  // Restablecer el estado de isFiring después de un cierto tiempo, para que no se pueda disparar muy rapido dejando el espacio presionado
   setTimeout(() => {
       isFiring = false;
-  }, 300); // Ajusta el tiempo según sea necesario
+  }, 300);
 }
 
 

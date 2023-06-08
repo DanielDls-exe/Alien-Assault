@@ -1,4 +1,3 @@
-// utils/collision.ts
 export function detectCollision(object1: any, object2: any) {
     return (
       object1.x < object2.x + object2.width &&
