@@ -9,7 +9,7 @@ const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 
 const startButton = document.getElementById("startButton") as HTMLButtonElement;
-const backgroundMusic = new Audio("musica-fondo.wav");
+const backgroundMusic = new Audio("music.wav");
 backgroundMusic.loop = true;
 
 // Cargamos las imágenes y sonidos
