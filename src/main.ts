@@ -22,13 +22,12 @@ enemyImage.src = "enemy.png";
 const bulletImage = new Image();
 bulletImage.src = "bullet.png";
 
-const player = new Player(canvas.width / 2, canvas.height - 50, playerImage, new Audio("explosion.wav"));
+const player = new Player(canvas.width / 2, canvas.height - 50, playerImage, new Audio("explosion.wav"),canvas);
 
 let enemies: Enemy[] = [];
 let bullets: Bullet[] = [];
 
 let isFiring = false;
-let isGameStarted = false;
 
 startButton.addEventListener("click", () => {
   startGame();
@@ -36,7 +35,6 @@ startButton.addEventListener("click", () => {
 
 function startGame() {
   startButton.style.display = "none";
-  isGameStarted = true;
   backgroundMusic.play();
   createEnemies();
   draw();
@@ -49,7 +47,7 @@ function createEnemies() {
       for (let col = 0; col < 6; col++) {
           const x = col * 80 + 50;
           const y = row * 60 + 50;
-          const enemy = new Enemy(x, y, enemyImage, new Audio("invaderkilled.wav"));
+          const enemy = new Enemy(x, y, enemyImage, new Audio("invaderkilled.wav"),canvas);
           enemies.push(enemy);
       }
   }
