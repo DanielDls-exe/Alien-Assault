@@ -7,8 +7,9 @@ export class Bullet {
     visible: boolean;
     hit: boolean;
     image: HTMLImageElement;
+    sound: HTMLAudioElement;
   
-    constructor(x: number, y: number, image: HTMLImageElement) {
+    constructor(x: number, y: number, image: HTMLImageElement, sound: HTMLAudioElement) {
       this.x = x;
       this.y = y;
       this.width = 5;
@@ -17,6 +18,7 @@ export class Bullet {
       this.visible = true;
       this.hit = false;
       this.image = image;
+      this.sound = sound;
     }
   
     draw(ctx: CanvasRenderingContext2D) {

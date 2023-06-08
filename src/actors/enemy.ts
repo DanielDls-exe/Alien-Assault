@@ -6,8 +6,9 @@ export class Enemy {
     speed: number;
     death: boolean;
     image: HTMLImageElement;
+    deathSound: HTMLAudioElement;
   
-    constructor(x: number, y: number, image: HTMLImageElement) {
+    constructor(x: number, y: number, image: HTMLImageElement, deathSound: HTMLAudioElement) {
       this.x = x;
       this.y = y;
       this.width = 30;
@@ -15,6 +16,7 @@ export class Enemy {
       this.speed = 1.5;
       this.death = false;
       this.image = image;
+      this.deathSound = deathSound;
     }
   
     draw(ctx: CanvasRenderingContext2D) {

@@ -7,8 +7,9 @@ export class Player {
     leftPressed: boolean;
     rightPressed: boolean;
     image: HTMLImageElement;
+    deathSound: HTMLAudioElement;
   
-    constructor(x: number, y: number, image: HTMLImageElement) {
+    constructor(x: number, y: number, image: HTMLImageElement, deathSound: HTMLAudioElement) {
       this.x = x;
       this.y = y;
       this.width = 20;
@@ -17,6 +18,7 @@ export class Player {
       this.leftPressed = false;
       this.rightPressed = false;
       this.image = image;
+      this.deathSound = deathSound;
   
       document.addEventListener("keydown", this.keyDownHandler.bind(this));
       document.addEventListener("keyup", this.keyUpHandler.bind(this));
