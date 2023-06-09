@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --outDir docs",
+    "ghbuild": "vite build --outDir docs --base=/mid-project-web",
     "preview": "vite preview"
   },
   "devDependencies": {
