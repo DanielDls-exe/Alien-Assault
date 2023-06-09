@@ -102,4 +102,4 @@ This project was developed by:
 
 * **Daniel Alvarado** - [danieldls-exe](https://github.com/DanielDls-exe)
 ---
-⌨️ with ❤️ by [danieldls-exe](https://
+⌨️ with ❤️ by [danieldls-exe](https://github.com/DanielDls-exe)
